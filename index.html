@@ -17,7 +17,7 @@
             color: white;
         }
         .header {
-            background: url('https://i.pinimg.com/736x/b7/64/d3/b764d3546a4a6910acb27faf851af2ab.jpg') no-repeat center center;
+            background: url('https://www.bhmpics.com/downloads/the-best-minecraft-Wallpapers/13.minecraft-dungeons-creeping-winter-5k.jpg') no-repeat center center;
             background-size: cover;
             color: white;
             text-align: center;
@@ -95,6 +95,7 @@
         <div class="container">
             <h1>Chào mừng đến với Server Minecraft PE</h1>
             <p>Địa chỉ IP: longha.io.vn | Port: 51896</p>
+            <p>Hãy sử dụng phiên bản MCPE 1.20.81.01</p>
         </div>
     </header>
 
@@ -115,6 +116,10 @@
                     <p id="note" class="note mt-3">
                         Vì máy chủ chạy dựa trên ATERNOS, mọi người kết bạn ZALO : 0357021421 để mình thêm quyền ATERNOS bật máy chủ tùy ý nhé!
                     </p>
+                    
+                        <br>
+                        Tham gia Server Discord: <a href="https://discord.com/invite/CCcNZKap" target="_blank">THAM GIA</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -122,7 +127,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Server Minecraft PE. Mọi quyền được bảo lưu.</p>
+            <p>&copy; 2024 Server Minecraft PE. Phát triển bởi Long Hà</p>
         </div>
     </footer>
 
@@ -153,8 +158,8 @@
                     if (data.online) {
                         serverStatusElement.innerHTML = `
                             <p>Trạng thái: <span class="text-success">Hoạt động</span></p>
-                            <p>Người chơi online: ${data.players.online}</p>
-                            <p>Số lượng tối đa người chơi: ${data.players.max}</p>
+                            <p id="playersOnline">Người chơi online: ${data.players.online}</p>
+                            <p id="maxPlayers">Số lượng tối đa người chơi: ${data.players.max}</p>
                             <p>Ping: ${data.ping}ms</p>
                         `;
                     } else {
