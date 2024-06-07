@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ Server Minecraft PE</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Minecraft.ttf') format('truetype');
+        }
+        body {
+            background-color: #3c3c3c;
+            font-family: 'Minecraft', 'Press Start 2P', cursive;
+            color: white;
+        }
+        .header {
+            background: url('https://i.pinimg.com/736x/b7/64/d3/b764d3546a4a6910acb27faf851af2ab.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        .header h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 8px #000000;
+        }
+        .header p {
+            font-size: 1.5em;
+            text-shadow: 1px 1px 6px #000000;
+            background: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .info {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .info h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .info .server-status {
+            background: #292b2c;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+        .info .server-status p {
+            font-size: 1.2em;
+        }
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .btn-minecraft {
+            background-color: #55a630;
+            color: white;
+            font-family: 'Minecraft', 'Press Start 2P', cursive;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .btn-minecraft:hover {
+            background-color: #407f22;
+        }
+        .loading {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #3498db;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .note {
+            color: #ffc107; /* Màu vàng */
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Chào mừng đến với Server Minecraft PE</h1>
+            <p>Địa chỉ IP: longha.io.vn | Port: 51896</p>
+        </div>
+    </header>
+
+    <section class="info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Tham gia chơi ngay</h2>
+                    <p>Kết nối với bạn bè và khám phá thế giới Minecraft PE đầy màu sắc.</p>
+                    <button class="btn btn-minecraft">Tham gia ngay</button>
+                </div>
+                <div class="col-md-8">
+                    <h2>Trạng thái của server</h2>
+                    <div class="server-status" id="serverStatus">
+                        <!-- Nội dung được cập nhật bởi JavaScript -->
+                    </div>
+                    <div class="loading" id="loading"></div>
+                    <p id="note" class="note mt-3">
+                        Vì máy chủ chạy dựa trên ATERNOS, mọi người kết bạn ZALO : 0357021421 để mình thêm quyền ATERNOS bật máy chủ tùy ý nhé!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Server Minecraft PE. Mọi quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Function to fetch server status
+        async function fetchServerStatus() {
+            const loadingElement = document.getElementById('loading');
+            loadingElement.style.display = 'block'; // Show loading animation
+            
+            try {
+                const response = await fetch(
+                    "https://api.ismcserver.online/longha.io.vn:51896",
+                    {
+                        headers: {
+                            "Authorization": "95fc5c0c-0db6-46d0-854e-b20453616488"
+                        }
+                    }
+                );
+                const data = await response.json();
+                console.log(data);
+
+                // Update UI with server status
+                const serverStatusElement = document.getElementById('serverStatus');
+                if (data.success) {
+                    if (data.online) {
+                        serverStatusElement.innerHTML = `
+                            <p>Trạng thái: <span class="text-success">Hoạt động</span></p>
+                            <p>Người chơi online: ${data.players.online}</p>
+                            <p>Số lượng tối đa người chơi: ${data.players.max}</p>
+                            <p>Ping: ${data.ping}ms</p>
+                        `;
+                    } else {
+                        serverStatusElement.innerHTML = `
+                            <p>Trạng thái: <span class="text-danger">Không hoạt động</span></p>
+                            <p>Server hiện không hoạt động.</p>
+                        `;
+                    }
+                } else {
+                    serverStatusElement.innerHTML = `
+                        <p>Không thể lấy thông tin từ server API.</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching server status:', error);
+                serverStatusElement.innerHTML = `
+                    <p>Không thể kết nối đến server API.</p>
+                `;
+            } finally {
+                loadingElement.style.display = 'none'; // Hide loading animation
+            }
+        }
+
+        // Call fetchServerStatus function when the page loads
+        fetchServerStatus();
+    </script>
+</body>
+</html>
